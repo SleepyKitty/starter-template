@@ -12,13 +12,13 @@ gulp.task('serve', ['sass'], function () {
     notify: false
   });
 
-  gulp.watch("src/sass/*.scss", ['sass']);
+  gulp.watch("src/sass/**/*.scss", ['sass']);
   gulp.watch("src/*.html").on('change', browserSync.reload);
 });
 
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('sass', function () {
-  return gulp.src("src/sass/*.scss")
+  return gulp.src("src/sass/**/*.scss")
       .pipe(sass().on('error', function (error) {
         console.log(error);
       }))
