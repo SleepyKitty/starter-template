@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
+var notify = require("gulp-notify");
 
 gulp.task('serve', ['sass'], function () {
 
@@ -9,7 +10,8 @@ gulp.task('serve', ['sass'], function () {
     server: {
       baseDir: "src"
     },
-    notify: false
+    notify: false,
+    open: false
   });
 
   gulp.watch("src/sass/**/*.scss", ['sass']);
@@ -19,9 +21,9 @@ gulp.task('serve', ['sass'], function () {
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('sass', function () {
   return gulp.src("src/sass/**/*.scss")
-      .pipe(sass().on('error', function (error) {
-        console.log(error);
-      }))
+      .pipe(sass({outputStyle: 'expanded'}).on('error', notify.onError({
+        title: 'Sass'
+      })))
       .pipe(autoprefixer({
         browsers: ['last 2 versions'],
         cascade: false
